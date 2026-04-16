@@ -61,3 +61,16 @@ begin
         END IF;
 end;
 /
+/*Excepciones*/
+declare
+    prueba number :=0;
+    resultado number;
+begin
+    resultado := prueba/0; -- PA CAUSAR UN ERROR
+        dbms_output.Put_line('El resultado es'|| resultado);
+    exception 
+    when zero_divide then
+        dbms_output.Put_line('FALLO'|| sqlcode);
+    when others then
+            dbms_output.Put_line('CUALQUIER OTRO ERROR');
+end;
