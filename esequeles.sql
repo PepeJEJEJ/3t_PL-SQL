@@ -68,9 +68,9 @@ declare
 begin
     resultado := prueba/0; -- PA CAUSAR UN ERROR
         dbms_output.Put_line('El resultado es'|| resultado);
-    exception 
-    when zero_divide then
-        dbms_output.Put_line('FALLO'|| sqlcode);
+    exception -- SOLTAR EXCEPCION
+    when zero_divide then -- SI SE DIVIDE POR 0
+        dbms_output.Put_line('FALLO'|| sqlCODE); -- TB VALE SQL ERRM
     when others then
             dbms_output.Put_line('CUALQUIER OTRO ERROR');
 end;
