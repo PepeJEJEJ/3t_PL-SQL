@@ -98,3 +98,108 @@ Si devuelve más de una fila → error → usar cursor o FOR SELECT.
 Las variables deben existir antes del SELECT.
 
 Todo lo que saques de la BD lo puedes usar igual que tus variables normales.
+
+✅ 1. ACTIVAR DBMS_OUTPUT EN SQLDeveloper
+Si no haces esto, no verás nada.
+
+Arriba → View → DBMS Output → + → seleccionar tu conexión.
+
+Te aparecerá una pestaña abajo llamada DBMS Output.
+Dale al botón verde para activarlo.
+
+✅ 2. CREAR TU TABLA (solo una vez)
+En una hoja nueva:
+
+sql
+create table alumnos(
+    id number,
+    nombre varchar2(50),
+    nota number
+);
+Ejecutas con el rayo.
+
+✅ 3. INSERTAR DATOS (solo una vez)
+sql
+insert into alumnos values (1, 'Juan', 7);
+insert into alumnos values (2, 'Ana', 4);
+insert into alumnos values (3, 'Luis', 9);
+commit;
+✅ 4. HACER SELECT … INTO EN SQLDeveloper
+Esto funciona EXACTAMENTE igual que en FreeSQL, pero aquí sí puedes ejecutar varios bloques seguidos.
+
+Ejemplo:
+
+sql
+declare
+    v_nombre alumnos.nombre%type;
+    v_nota alumnos.nota%type;
+begin
+    select nombre, nota
+    into v_nombre, v_nota
+    from alumnos
+    where id = 1;
+
+    dbms_output.put_line('Alumno: ' || v_nombre);
+    dbms_output.put_line('Nota: ' || v_nota);
+end;
+/
+Ejecutas TODO el bloque (incluido el /).
+
+✅ 5. RECORRER VARIAS FILAS (cursor implícito)
+sql
+begin
+    for fila in (select nombre, nota from alumnos) loop
+        dbms_output.put_line(fila.nombre || ' - ' || fila.nota);
+    end loop;
+end;
+/
+🔥 6. ¿Cómo integrar esto en tus ejercicios?
+Aquí tienes tus ejemplos adaptados tal cual para SQLDeveloper.
+
+✔ Ejemplo 1: Mostrar nombre desde BD
+sql
+declare
+    v_nombre alumnos.nombre%type;
+begin
+    select nombre
+    into v_nombre
+    from alumnos
+    where id = 1;
+
+    dbms_output.put_line('Hola ' || v_nombre);
+end;
+/
+✔ Ejemplo 2: Multiplicar nota por 2
+sql
+declare
+    v_nota number;
+begin
+    select nota
+    into v_nota
+    from alumnos
+    where id = 1;
+
+    v_nota := v_nota * 2;
+
+    dbms_output.put_line('Resultado: ' || v_nota);
+end;
+/
+✔ Ejemplo 3: IF con nota real de la BD
+sql
+declare
+    v_nota number;
+begin
+    select nota
+    into v_nota
+    from alumnos
+    where id = 1;
+
+    if v_nota < 5 then
+        dbms_output.put_line('Suspenso');
+    elsif v_nota = 5 then
+        dbms_output.put_line('Aprobado raspado');
+    else
+        dbms_output.put_line('Aprobado');
+    end if;
+end;
+/
