@@ -95,7 +95,7 @@ INSERT INTO marcas_coche VALUES (8,'Opel');
 
 -- Modelos
 INSERT INTO modelo_coche VALUES (1,'A5 modelo alta gama',4);
-INSERT INTO modelo_coche VALUES (2,'Zafira AÃ±o 2015',8);
+INSERT INTO modelo_coche VALUES (2,'Zafira Año 2015',8);
 INSERT INTO modelo_coche VALUES (3,'Kangoo',3);
 INSERT INTO modelo_coche VALUES (4,'Golf GTI',7);
 INSERT INTO modelo_coche VALUES (5,'A4 basico',4);
@@ -103,7 +103,7 @@ INSERT INTO modelo_coche VALUES (6,'C4 Exclusive',3);
 INSERT INTO modelo_coche VALUES (7,'C4 Gran Picasso',3);
 INSERT INTO modelo_coche VALUES (10,'Kouga',2);
 INSERT INTO modelo_coche VALUES (11,'DS C4',3);
-INSERT INTO modelo_coche VALUES (12,'Astra AÃ±o 2014',8);
+INSERT INTO modelo_coche VALUES (12,'Astra Año 2014',8);
 
 -- Coches
 INSERT INTO coche VALUES ('3345GVF', 1, 6000);

@@ -74,3 +74,38 @@ begin
     when others then
             dbms_output.Put_line('CUALQUIER OTRO ERROR');
 end;
+/
+/*Excepciones Personalizadas*/
+declare
+    edad number :=-1;
+    edad_exception exception;
+begin
+    if edad < 0 or edad > 120 then
+    raise edad_exception; -- PA MOSTRAR UNA EXCEPCION
+end if;
+exception
+    when edad_exception then
+    dbms.output.put_line('Error en la variable error');
+end;
+/
+/*BLOQUE ANONIMO*/
+declare --%TYPE: ENCUENTRA EL MISMO TIPO QUE EL CAMPO QUE USEMOS
+    v_id marcas_coche.id_marca%type := &id_marca1; -- := &id_marca1; es como el scanner de java
+    v_marca marcas_coche.marca%type; -- v_xxxx = valor, marcas_coche = tabla .xxxx = campo de la tabla
+begin
+    select marca into v_marca from marcas_coche
+    where id_marca=v_id;
+    dbms_output.put_line('La marca con id '|| v_id ||  ' es '|| v_marca);
+end;
+/
+
+declare
+    v_dni cliente.dni%type := '&dni';
+    v_nombre cliente.nombre%type;
+    v_tlf cliente.telef%type;
+begin -- SELECCIONAR CAMPOS DE LA TABLA Y PONERLOS EN LAS VARIABLES ANTERIORES SACADAS DE LA TABLA
+    select nombre, telef into v_nombre, v_tlf from cliente
+    where dni = v_dni; -- DNI IGUAL AL DE LA VARIABLE DNI
+    dbms_output.put_line('La marca con dni '|| v_dni ||  ' es '|| v_nombre || '_' || v_tlf);
+end;
+/
