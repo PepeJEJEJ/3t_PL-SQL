@@ -109,3 +109,42 @@ begin -- SELECCIONAR CAMPOS DE LA TABLA Y PONERLOS EN LAS VARIABLES ANTERIORES S
     dbms_output.put_line('La marca con dni '|| v_dni ||  ' es '|| v_nombre || '_' || v_tlf);
 end;
 /
+
+/*CONTAR*/
+/*8 Mostrar cuantos modelos de coches hay de la marca 'Citroen'.*/
+declare
+    v_total number;-- DECLARAMOS EL VALOR NUMERICO
+begin
+    select count(*) into v_total -- CONTAMOS Y LO CONTADO SE VA AL NUMERICO
+    from modelo_coche
+    where id_marca = ( select id_marca from marcas_coche where marca = 'Citroen');-- SUBCONSULTA QUE SOLO CUENTA ALGO SI SON CITROEN
+    dbms_output.put_line('Modelos de Citroen: ' || v_total);
+exception
+    when no_data_found then
+        dbms_output.put_line('NO HAY DATOS');
+end;
+/
+
+/*FUNCIONES*/
+create or replace function suma_ventas_empleado(p_dni empleado.dni%type)-- Crear (o reemplazar) la funcion
+return number-- DEVOLVER NUMERO
+is -- VA A DEVOLVER SOLO UN NUMERO
+    v_total number;-- ESTE NUMERO
+begin
+    select sum(precio) into v_total from vende -- SELECCIONA Y SUMA TODOS LOS PRECIOS, PONLOS EN V_TOTAL, DE LA TABLA VENDE
+    where dni_empleado = p_dni; -- SI EL DNI DEL EMPLEADO ES EL MISMO QUE EL DNI QUE TU PASES POR TECLADO
+
+    return v_total; -- DEVUELVES EL VALOR TOTAL
+exception
+    when no_data_found then
+        return dbms_output.put_line('NO HAY DATOS');
+end;
+/
+/*LLAMAR A LA FUNCION*/
+declare
+    v_result number;-- DECLARAR LA VARIABLE RESULTADO
+begin
+    v_result := suma_ventas_empleado('&dni_empleado');-- LA VARIABLE ES ESTA:
+    dbms_output.put_line('La Suma de las ventas: ' || v_result);
+end;
+/
