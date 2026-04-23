@@ -1,4 +1,4 @@
-/*Mostrar el nombre de la marca dado su id.*/
+/*1 Mostrar el nombre de la marca dado su id.*/
 declare
     v_id marcas_coche.id_marca%type := &id_marca1;
     v_marca marcas_coche.marca%type;
@@ -9,7 +9,7 @@ begin
 end;
 /
 
-/*Mostrar el nombre y teléfono de un cliente dado su dni. 
+/*2 Mostrar el nombre y teléfono de un cliente dado su dni. 
 (al tratarse de un varchar2 tenéis que poner el dni entre comillas simples)*/
 declare
     v_dni cliente.dni%type := '&dni';
@@ -22,7 +22,7 @@ begin
 end;
 /
 
-/*Igual que le anterior pero capturando una excepcion en caso 
+/*3 Igual que le anterior pero capturando una excepcion en caso 
 de que no existan datos(no_data_found)*/
 declare
     v_dni cliente.dni%type := '&dni';
@@ -38,7 +38,7 @@ exception
 end;
 /
 
-/*Mostrar el nombre y teléfono de un cliente dado su dni. 
+/*4 Mostrar el nombre y teléfono de un cliente dado su dni. 
 (lo mismo que el ejercicio anterior pero ahora utilizando %rowtype)*/
 declare
     v_cliente cliente%rowtype;
@@ -52,3 +52,4 @@ exception
     dbms_output.put_line('NO HAY DATOS');
 end;
 /
+
