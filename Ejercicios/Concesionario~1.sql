@@ -146,3 +146,26 @@ begin
     dbms_output.put_line('La Suma de las ventas: ' || v_result);
 end;
 /
+/*2 Función que devuelve el número de coches vendidos por un empleado*/
+create or replace function suma_ventas_empleado(p_dni empleado.dni%type)-- Crear (o reemplazar) la funcion
+return number-- DEVOLVER NUMERO
+is -- VA A DEVOLVER SOLO UN NUMERO
+    v_total number;-- ESTE NUMERO
+begin
+    select sum(precio) into v_total from vende -- SELECCIONA Y SUMA TODOS LOS PRECIOS, PONLOS EN V_TOTAL, DE LA TABLA VENDE
+    where dni_empleado = p_dni; -- SI EL DNI DEL EMPLEADO ES EL MISMO QUE EL DNI QUE TU PASES POR TECLADO
+
+    return v_total; -- DEVUELVES EL VALOR TOTAL
+exception
+    when no_data_found then
+        return dbms_output.put_line('NO HAY DATOS');
+end;
+/
+/*LLAMAR A LA FUNCION*/
+declare
+    v_result number;-- DECLARAR LA VARIABLE RESULTADO
+begin
+    v_result := suma_ventas_empleado('&dni_empleado');-- LA VARIABLE ES ESTA:
+    dbms_output.put_line('La Suma de las ventas: ' || v_result);
+end;
+/
