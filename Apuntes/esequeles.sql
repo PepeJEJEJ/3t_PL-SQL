@@ -148,3 +148,15 @@ begin
     dbms_output.put_line('La Suma de las ventas: ' || v_result);
 end;
 /
+
+/*DISPARADORES O TRIGGERS*/
+create or replace trigger VerPrecioCompra -- Crear o reemplazar
+before insert on coche -- EJECUTAR BEFORE (ANTES) o AFTER (DESPUES)
+for each row
+begin
+    if :new.precio_compra is null or :new.precio_compra <=0 then
+    raise_application_error(-20001, 'PRECIO COMPRA NO CORRECTO');
+    END if;
+end;
+/*los campos de la tabla*/
+insert into coche (matricula, id_modelo, precio_compra) values ('1234AA', 1, 0);
