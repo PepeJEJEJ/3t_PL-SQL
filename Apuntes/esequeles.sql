@@ -16,7 +16,7 @@ end;
 /*COMENTARIOS*/
 -- EJEMPLO 1
 /*EJEMPLO 2*/
-/*3. Declarar una variable numérica y mostrar si es mayor que 10*/
+/*3. Declarar una variable numÃ©rica y mostrar si es mayor que 10*/
 declare
     numero number:=5; -- DECLARAR VARIABLES
 begin -- INICIAR EL CODIGO
@@ -27,7 +27,7 @@ begin -- INICIAR EL CODIGO
         END IF;-- FIN
 end;
 /
-/*4. Mostrar los números del 1 al 10 con while*/
+/*4. Mostrar los nÃºmeros del 1 al 10 con while*/
 declare
     n number:=0; -- NUMERO QUE USAMOS
 begin
@@ -37,16 +37,16 @@ begin
     end loop; -- CERRAR EL BUCLE
 end;
 /
-/*5. Mostrar los números del 1 al 10 con for*/
+/*5. Mostrar los nÃºmeros del 1 al 10 con for*/
 declare
     n number:=0;
 begin
-    for n in 1..10 loop -- ES COMO WHILE PERO PONEMOS QUE ES N DESDE X .. HASTA Y
+    for n in 1..10 loop -- ES COMO WHILE PERO PONEMOS QUE "ES N DESDE X .. (HASTA) Y"
         dbms_output.Put_line(n);
     end loop;
 end;
 /
-/*6. Declarar variable númerica nota y mostrar con casi si aprobado o no */
+/*6. Declarar variable nÃºmerica nota y mostrar con casi si aprobado o no */
 declare
     nota number:=4;
 begin
