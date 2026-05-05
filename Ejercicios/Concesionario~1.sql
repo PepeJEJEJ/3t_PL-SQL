@@ -71,25 +71,17 @@ end;
 
 /*6 Mostrar toda la información del modelo de un coche dado un id, incluida el nombre de la marca.*/
 declare
-    v_id modelo_coche.id_modelo%type := &id_modelo;
-    v_nombre_modelo modelo_coche.descripcion%type;
-    v_id_marca modelo_coche.id_marca%type;
+    v_id_modelo modelo_coche.id_modelo%type := &modelocoche;
+    v_modelo modelo_coche%rowtype;
     v_marca marcas_coche.marca%type;
 begin
-    select descripcion, id_marca
-    into v_nombre_modelo, v_id_marca
-    from modelo_coche
-    where id_modelo = v_id;
-
-    select marca
-    into v_marca
-    from marcas_coche
-    where id_marca = v_id_marca;
-
-    dbms_output.put_line('ID MODELO: ' || v_id || 'NOMBRE MODELO: ' || v_nombre_modelo || 'ID MARCA: ' || v_id_marca || 'MARCA: ' || v_marca);
-exception
-    when no_data_found then
-        dbms_output.put_line('NO HAY DATOS');
+    select m.id_modelo, m.descripcion, ma.marca
+    into v_modelo.id_modelo, v_modelo.descripcion, v_marca
+    from modelo_coche m
+    join marcas_coche ma
+    on m.id_marca = ma.id_marca
+    where m.id_modelo = v_id_modelo;
+    dbms_output.put_line('Modelo id: '||v_modelo.id_modelo||' Modelo: '||v_modelo.descripcion||' Marca: '||v_marca);
 end;
 /
 
@@ -118,6 +110,44 @@ begin
 exception
     when no_data_found then
         dbms_output.put_line('NO HAY DATOS');
+end;
+/
+/*2 Crea un procedimiento que reciba como parámetro la matrícula de un coche vendido. 
+El procedimiento debe mostrar por pantalla el nombre del cliente que compró el coche, 
+el nombre del empleado que realizó la venta, el precio de venta (debe manejar  NO_DATA_FOUND).*/
+create or replace procedure datos_venta_coche (
+    v_matricula in coche.matricula%type,
+    v_cliente   out cliente.nombre%type,
+    v_empleado  out empleado.nombre%type,
+    v_precio    out vende.precio%type
+)
+is
+begin
+    select c.nombre, e.nombre, v.precio
+    into v_cliente, v_empleado, v_precio
+    from vende v
+    join cliente c
+        on v.dni_cliente = c.dni
+    join empleado e
+        on v.dni_empleado = e.dni
+    where v.matricula = v_matricula;
+
+exception
+    when no_data_found then
+        v_cliente  := null;
+        v_empleado := null;
+        v_precio   := null;
+        dbms_output.put_line('No existe venta para esa matrícula');
+end;
+/
+declare
+    cli cliente.nombre%type;
+    emp empleado.nombre%type;
+    pre vende.precio%type;
+begin
+    datos_venta_coche('1234ABC', cli, emp, pre);
+
+    dbms_output.put_line(cli||' - '||emp||' - '||pre);
 end;
 /
 
